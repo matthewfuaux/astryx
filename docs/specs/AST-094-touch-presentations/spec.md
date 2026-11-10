@@ -364,7 +364,8 @@ a measured, sourced difference exists.
   input values, not motion roles, and stay internal as FR4 states. Under reduced
   motion, `design:reduced-motion` governs both kinds (FR8, FR38, FR43).
   Companion motion inside a component (a sheet's scrim fade, handle and content
-  fade or scale, a Lightbox's chrome fade, a menu's backdrop) runs on the pace
+  fade or scale, the choices a sheet's dismissal confirmation raises from its
+  edge, a Lightbox's chrome fade, a menu's backdrop) runs on the pace
   of the component's main motion: it derives from the main spring's progress and
   settle time in a gesture component, or from the main curve's duration and
   easing in a tap component, and never runs on independent timing.
@@ -706,7 +707,13 @@ under a finger, and a mouse follows `module:DropdownMenu/useMenuPress` FR3 and
   velocity, and its commit point is halfway from its lowest detent to closed. A
   release past its measured flick speed lands on the first position at or past
   its projection, at least its next one. So a short fast flick at its lowest
-  detent closes it (`component:BottomSheet` FR19). A row swipe keeps
+  detent closes it (`component:BottomSheet` FR19). A BottomSheet whose
+  dismissal confirmation is active never closes on a release: where its
+  `purpose` allows the swipe, a release at or past its park offset, or a
+  downward flick of a finger or a trackpad below its shortest detent, parks it
+  with the choice
+  between keeping and discarding its changes, and any other release settles
+  on a detent (`component:BottomSheet` FR23). A row swipe keeps
   `spec:AST-057`'s own release rule.
 - **FR37 — Moving back cancels.** A release whose velocity points back
   toward the start MUST cancel, whatever the travel so far.
@@ -845,8 +852,9 @@ under a finger, and a mouse follows `module:DropdownMenu/useMenuPress` FR3 and
   rubber band for a finger and a trackpad alike, the same travel giving the
   same stretch, a trackpad's pull reaching no farther than the sheet's height,
   and springs back at the release; an `info` sheet closes on a flick or past
-  its close distance and otherwise springs back (FR36, FR37); a mouse wheel
-  never moves a sheet. A pager follows a trackpad swipe, never more than one
+  its close distance and otherwise springs back (FR36, FR37), unless its
+  dismissal confirmation is active, when it parks or settles as
+  `component:BottomSheet` FR23 states; a mouse wheel never moves a sheet. A pager follows a trackpad swipe, never more than one
   page from where the swipe began, rubber-banded at its first and last page; it
   commits past half a page or on a flick, never on a speed spike that moved it
   less than a tenth of a page, and a swipe that lands during a settle starts
